@@ -35,7 +35,6 @@ class App extends React.Component {
     this.state.blogs.forEach(blog => {
       if (blog.node.id === id) blog.node.liked = true
     })
-    console.log(this.state.blogs)
   }
 
   componentDidMount() {
@@ -51,12 +50,12 @@ class App extends React.Component {
         </Header>
         <Blog>
           <BlogData>{props.blog.node.description}</BlogData>
-          <Time>
+          <Footer inversed>
             <Like onClick={this.like.bind(null, blogId)} id={`like${blogId}`}>
               ♡
-            </Like>{" "}
-            {props.blog.node.time}
-          </Time>
+            </Like>
+            <Time>{props.blog.node.time}</Time>
+          </Footer>
         </Blog>
         <br />
       </BlogContainer>
@@ -96,4 +95,5 @@ export const query = graphql`
     }
   }
 `
+
 export default App

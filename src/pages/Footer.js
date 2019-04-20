@@ -7,7 +7,7 @@ const Footer = styled.footer`
   font-size: 20px;
   font-family: sans-serif;
   display: flex;
-  justify-content: center;
+  justify-content: ${props=>props.inversed?"flex-end":"center"};
   align-items: center;
 `
 

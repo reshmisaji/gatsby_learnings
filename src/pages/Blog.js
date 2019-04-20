@@ -34,7 +34,6 @@ const Like = styled.span`
   width: 50px;
   height: 30px;
   color: red;
-  text-shadow: 1px 1px 1px red;
 `
 
 export { Like, BlogData, Time, BlogContainer, Blog }
