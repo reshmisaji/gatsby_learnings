@@ -1,76 +1,9 @@
 import React from "react"
-import styled from "styled-components"
 import { graphql } from "gatsby"
-
-const Header = styled.header`
-  background-color: ${props => props.bgcolor};
-  color: ${props => props.color};
-  height: ${props => props.height};
-  font-size: 30px;
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`
-
-const Container = styled.div`
-  width: 98vw;
-  height: 98vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`
-
-const Footer = styled.footer`
-  background-color: ${props => props.bgcolor};
-  color: ${props => props.color};
-  height: ${props => props.height};
-  font-size: 20px;
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const Blog = styled.article`
-  background-color: wheat;
-  font-size: 18px;
-  font-family: serif;
-  width: 100%;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: scroll;
-`
-
-const BlogContainer = styled.div`
-  background-color: ${props => props.bgcolor};
-  color: ${props => props.color};
-  width: 80%;
-`
-
-const Main = styled.main`
-  width: 100%;
-  height: 85%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: scroll;
-`
-
-const Time = styled.time`
-  display: flex;
-  justify-content: flex-end;
-`
-
-const BlogData = styled.p`
-  font-size: 18px;
-  padding-left: 10px;
-  font-family: sans-serif;
-  line-height: 1.5;
-`
+import Header from "./Header"
+import Footer from "./Footer"
+import { Container, Main } from "./Containers"
+import { Like, BlogData, Time, BlogContainer, Blog } from "./Blog"
 
 const Heading = function(props) {
   return (
@@ -91,23 +24,39 @@ const Bottom = function(props) {
 class App extends React.Component {
   constructor(props) {
     super(props)
+    this.state = { blogs: [], data: props.data }
     this.Blogs = this.Blogs.bind(this)
-    this.state = { blogs: [],data:props.data }
+    this.like = this.like.bind(this)
+    this.Blog = this.Blog.bind(this)
+  }
+
+  like(id) {
+    document.getElementById(`like${id}`).innerHTML = "❤️"
+    this.state.blogs.forEach(blog => {
+      if (blog.node.id === id) blog.node.liked = true
+    })
+    console.log(this.state.blogs)
   }
 
   componentDidMount() {
-    this.setState({blogs:this.state.data.allBlogsJson.edges})
+    this.setState({ blogs: this.state.data.allBlogsJson.edges })
   }
 
   Blog(props) {
+    const blogId = props.blog.node.id
     return (
-      <BlogContainer>
+      <BlogContainer id={blogId}>
         <Header color={"white"} bgcolor={"black"} height={"50px"}>
           {props.blog.node.heading}
         </Header>
         <Blog>
           <BlogData>{props.blog.node.description}</BlogData>
-          <Time>{props.blog.node.time}</Time>
+          <Time>
+            <Like onClick={this.like.bind(null, blogId)} id={`like${blogId}`}>
+              ♡
+            </Like>{" "}
+            {props.blog.node.time}
+          </Time>
         </Blog>
         <br />
       </BlogContainer>
@@ -140,6 +89,8 @@ export const query = graphql`
           heading
           description
           time
+          liked
+          id
         }
       }
     }
