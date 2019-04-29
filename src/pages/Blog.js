@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 const Blog = styled.article`
-  background-color: wheat;
+  background-color: papayawhip;
   font-size: 18px;
   font-family: serif;
   width: 100%;
@@ -9,6 +9,7 @@ const Blog = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   overflow: scroll;
 `
 
@@ -24,6 +25,7 @@ const Time = styled.time`
 `
 
 const BlogData = styled.p`
+  width: 80%;
   font-size: 18px;
   padding-left: 10px;
   font-family: sans-serif;
@@ -33,7 +35,7 @@ const BlogData = styled.p`
 const Like = styled.span`
   width: 50px;
   height: 30px;
-  color: red;
+  color: black;
 `
 
 export { Like, BlogData, Time, BlogContainer, Blog }

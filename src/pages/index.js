@@ -7,7 +7,7 @@ import { Like, BlogData, Time, BlogContainer, Blog } from "./Blog"
 
 const Heading = function(props) {
   return (
-    <Header color={"white"} bgcolor={"gray"} height={"10%"}>
+    <Header color={"white"} bgcolor={"black"} height={"10%"}>
       {props.heading}
     </Header>
   )
@@ -15,7 +15,7 @@ const Heading = function(props) {
 
 const Bottom = function(props) {
   return (
-    <Footer color={"white"} bgcolor={"gray"} height={"5%"}>
+    <Footer color={"white"} bgcolor={"black"} height={"5%"}>
       {props.text}
     </Footer>
   )
@@ -31,9 +31,15 @@ class App extends React.Component {
   }
 
   like(id) {
-    document.getElementById(`like${id}`).innerHTML = "❤️"
+    const like = document.getElementById(`like${id}`)
+    if (like.innerHTML === "❤️") {
+      document.getElementById(`like${id}`).innerHTML = "♡"
+    } else {
+      document.getElementById(`like${id}`).innerHTML = "❤️"
+    }
+
     this.state.blogs.forEach(blog => {
-      if (blog.node.id === id) blog.node.liked = true
+      if (blog.node.id === id) blog.node.liked = !blog.node.liked
     })
   }
 
@@ -45,7 +51,7 @@ class App extends React.Component {
     const blogId = props.blog.node.id
     return (
       <BlogContainer id={blogId}>
-        <Header color={"white"} bgcolor={"black"} height={"50px"}>
+        <Header color={"white"} bgcolor={"gray"} height={"50px"}>
           {props.blog.node.heading}
         </Header>
         <Blog>
